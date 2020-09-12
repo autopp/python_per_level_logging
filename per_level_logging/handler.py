@@ -7,7 +7,7 @@ class PerLevelHandler(Handler):
         self.handlers = handlers
 
     def emit(self, record: LogRecord):
-        handler = self.handlers[record.levelno]
+        handler = self.handlers.get(record.levelno, None)
         if handler is not None:
             handler.emit(record)
 

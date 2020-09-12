@@ -34,3 +34,10 @@ class TestPerLevelHandler(unittest.TestCase):
         self.assertEqual(self.info_warn_buf.getvalue(), "")
         self.assertEqual(self.err_buf.getvalue(), "error message\n")
         self.mockHandleError.assert_not_called()
+
+    def test_output_to_not_set(self):
+        self.logger.critical("critical message")
+
+        self.assertEqual(self.info_warn_buf.getvalue(), "")
+        self.assertEqual(self.err_buf.getvalue(), "")
+        self.mockHandleError.assert_not_called()
