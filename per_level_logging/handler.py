@@ -8,11 +8,9 @@ class PerLevelHandler(Handler):
         self.default = default
 
     def emit(self, record: LogRecord):
-        handler = self.handlers.get(record.levelno, None)
+        handler = self.handlers.get(record.levelno, self.default)
         if handler is not None:
             handler.emit(record)
-        elif self.default is not None:
-            self.default.emit(record)
 
     def flush(self):
         for handler in self.handlers.values():
