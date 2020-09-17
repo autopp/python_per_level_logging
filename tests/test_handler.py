@@ -54,7 +54,12 @@ class TestPerLevelHandler(unittest.TestCase):
         self.assertEqual(self.default_buf.getvalue(), "critical message\n")
         handler.handleError.assert_not_called()
 
-    def create_handler_and_logger(self, handlers, default):
+    def test_flush(self):
+        handler, _ = self.create_handler_and_logger(self.handlers, None)
+        handler.flush()
+        handler.handleError.assert_not_called()
+
+    def create_handler_and_logger(self, handler, default):
         handler = PerLevelHandler(handlers, default)
         handler.handleError = MagicMock()
         logger = logging.getLogger('test')
