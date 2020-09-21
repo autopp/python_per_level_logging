@@ -55,11 +55,16 @@ class TestPerLevelHandler(unittest.TestCase):
         handler.handleError.assert_not_called()
 
     def test_flush(self):
+        for h in self.handlers.values():
+            h.flush = MagicMock()
         handler, _ = self.create_handler_and_logger(self.handlers, None)
         handler.flush()
+
+        for h in self.handlers.values():
+            h.flush.assert_called_once()
         handler.handleError.assert_not_called()
 
-    def create_handler_and_logger(self, handler, default):
+    def create_handler_and_logger(self, handlers, default):
         handler = PerLevelHandler(handlers, default)
         handler.handleError = MagicMock()
         logger = logging.getLogger('test')
